@@ -40,5 +40,4 @@ resource "azurerm_storage_container" "tf-state-container" {
   name                      = "qatfstatecnt"
   resource_group_name       = "${azurerm_resource_group.tf-state-rg.name}"
   storage_account_name      = "${azurerm_storage_account.tf-state-storage-account.name}"
-  tags                      = "${var.tags}"
 }
