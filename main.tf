@@ -3,7 +3,7 @@
 # all QAs configurations
 #
 provider "azurerm" {
-  version = "1.8.0"
+  version = "1.12.0"
 }
 
 variable resource_group_name {
