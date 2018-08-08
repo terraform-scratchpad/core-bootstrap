@@ -6,21 +6,6 @@ provider "azurerm" {
   version = "1.12.0"
 }
 
-variable tf_state_resource_group_name {
-  type = "string"
-  default = "QA-DIOR-TF-STATE"
-}
-
-variable "tags" {
-  type = "map"
-  default = {
-    scope         = "qa"
-    source        = "terraform"
-    env           = "staging"
-    costEntity    = "dior"
-  }
-}
-
 resource "azurerm_resource_group" "tf-state-rg" {
   location                  = "${var.location}"
   name                      = "${var.tf_state_resource_group_name}"
@@ -42,11 +27,11 @@ resource "azurerm_storage_container" "tf-state-container" {
   storage_account_name      = "${azurerm_storage_account.tf-state-storage-account.name}"
 }
 
-resource "null_resource" "set-access-key" {
+resource "null_resource" "storage-container-access-key" {
   provisioner "local-exec" {
     command = <<EOT
-echo "ARM_ACCESS_KEY=${azurerm_storage_account.tf-state-storage-account.primary_access_key}" > /usr/local/var/azure-terraform-tfstate-backend.cf
-echo "terraform backend configuration file has been updated with new ARM_ACCESS_KEY"
+echo "access_key = ${azurerm_storage_account.tf-state-storage-account.primary_access_key}" > /usr/local/var/azure-tfstate-backend-access_key.cf
+echo "terraform backend container ${azurerm_storage_container.tf-state-container.name} with new access_key stored at /usr/local/var/azure-tfstate-backend-access_key.cf"
     EOT
   }
 }
