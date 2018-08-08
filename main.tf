@@ -45,9 +45,8 @@ resource "azurerm_storage_container" "tf-state-container" {
 resource "null_resource" "set-access-key" {
   provisioner "local-exec" {
     command = <<EOT
-echo "ARM_ACCESS_KEY=${azurerm_storage_account.tf-state-storage-account.primary_access_key}" > /usr/local/var/azure-terraform-access_key.sh
-source /usr/local/var/azure-terraform-access_key.sh
-echo "env var ARM_ACCESS_KEY has been set locally"
+echo "ARM_ACCESS_KEY=${azurerm_storage_account.tf-state-storage-account.primary_access_key}" > /usr/local/var/azure-terraform-tfstate-backend.cf
+echo "terraform backend configuration file has been updated with new ARM_ACCESS_KEY"
     EOT
   }
 }
