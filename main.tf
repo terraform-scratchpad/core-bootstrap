@@ -36,7 +36,7 @@ resource "azurerm_storage_container" "core-state-container" {
 resource "null_resource" "storage-container-access-key" {
   provisioner "local-exec" {
     command = <<EOT
-echo "access_key=${azurerm_storage_account.core-state-storage-account.primary_access_key}" > ~/.secrets/backend-access_key.cf
+echo "access_key=\"${azurerm_storage_account.core-state-storage-account.primary_access_key}\"" > ~/.secrets/backend-access_key.cf
 echo "terraform backend container ${azurerm_storage_container.core-state-container.name} with new access_key stored at ~/.secrets/backend-access_key.cf"
     EOT
   }
