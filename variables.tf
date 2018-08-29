@@ -8,7 +8,14 @@ variable "tags" {
     costEntity    = "dior"
   }
 }
-variable tf_state_resource_group_name {
+variable resource_group_name {
   type = "string"
-  default = "QA-DIOR-TF-STATE"
+}
+variable tfstate_storage_account_name {
+  type = "string"
+  default = "qatfstate"
+}
+variable tfstate_storage_container_name {
+  type = "string"
+  default = "qatfstatecnt"
 }
